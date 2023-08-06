@@ -14,5 +14,39 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "react/prop-types": 0,
+		"react/react-in-jsx-scope": "off",
+		"no-multiple-empty-lines": [
+			"error",
+			{
+				"max": 2,
+				"maxEOF": 2
+			}
+		],
+		"no-console": [
+			"warn",
+			{
+				"allow": ["warn", "error", "info"]
+			}
+		],
+		"no-debugger": 1,
+		"max-lines": [
+			"warn",
+			{
+				"max": 400,
+				"skipComments": true
+			}
+		],
+		"no-unused-vars": "error",
+		"@typescript-eslint/no-unused-vars": ["error"],
+		"@typescript-eslint/type-annotation-spacing": [
+			"warn",
+			{
+				"before": false,
+				"after": true
+			}
+		],
+		"object-curly-newline": "warn"
   },
+  
 }
