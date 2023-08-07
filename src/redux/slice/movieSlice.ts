@@ -20,7 +20,7 @@ const initialState: MovieDataState = {
 };
 
 export const movieSlice = createSlice({
-	name: 'user',
+	name: 'movies',
 	initialState,
 	reducers: {
 		setQuery: (state, action: PayloadAction<string>) => {

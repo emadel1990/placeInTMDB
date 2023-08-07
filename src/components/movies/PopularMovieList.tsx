@@ -7,21 +7,19 @@ import { Movie } from './Movie';
 import { Movie as MovieInterface } from '../../interfaces/movieDBResponse.interface';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { NoMovieFound } from './NotMovieFound';
-import { SkeletonListMovie } from './SkeletonListMovie';
 
-export const MovieList = () => {
+export const PopularMovieList = () => {
 	const dispatch = useAppDispatch();
 	const movieState = useAppSelector(getMovieData);
 	const [page, setPage] = useState(1);
 	const [hasMore, setHasMore] = useState(false);
 	const {
 		data: allMovies,
-		isLoading,
 		mutate: reloadMovies,
 		error
 	} = useFetch(
-		() => SWRKeyConstants.GET_ALL_MOVIES(movieState.query, page),
-		() => SWRFetchConstants.GET_ALL_MOVIES(movieState.query, page)
+		() => SWRKeyConstants.GET_POPULAR_MOVIES(page),
+		() => SWRFetchConstants.GET_POPULAR_MOVIES(page)
 	);
 
 	useEffect(() => {
@@ -55,10 +53,9 @@ export const MovieList = () => {
 	return (
 		<div className="flex flex-wrap flex-row m-10  max-w-6xl gap-x-10 justify-center ">
 			{error && <h1 className="text-3xl font-bold text-white">Error while fetching...</h1>}
-			{isLoading && <SkeletonListMovie />}
-			{movieState.query && movieState.query?.length > 0 && movieState.moviesData.results.length > 0 && (
+			{movieState.moviesData.results.length > 0 && (
 				<InfiniteScroll
-					className="flex flex-wrap flex-row mx-10  w-full gap-x-10 justify-cente"
+					className="flex flex-wrap flex-row mx-10 w-full gap-x-8 justify-cente p-5"
 					dataLength={movieState?.moviesData?.results?.length}
 					next={fetchMoreData}
 					hasMore={hasMore}
@@ -76,7 +73,7 @@ export const MovieList = () => {
 					})}
 				</InfiniteScroll>
 			)}
-			{movieState.query && movieState.query?.length > 0 && movieState.moviesData.results.length === 0 && <NoMovieFound />}
+			{(movieState.moviesData.results.length === 0 || error) && <NoMovieFound />}
 		</div>
 	);
 };

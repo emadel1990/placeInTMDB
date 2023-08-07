@@ -4,7 +4,7 @@ import { trackPromise } from 'react-promise-tracker';
 
 export const tmdbService = {
 	async searchMovies(query: string | undefined, page: string | undefined, track: boolean): Promise<any> {
-		if (!query) return this.mostPopularMovies(page, track);
+		if (!query) return null;
 		const base_query = `3/search/movie?query=${query}`;
 		if (page) {
 			const response = await BaseService.getData(`${base_query}&page=${page}`, {}, track);
@@ -36,13 +36,9 @@ export const tmdbService = {
 			return response?.data || response;
 		}
 	},
-	async mostPopularMovies(page: string | undefined, track: boolean): Promise<any> {
-		if (page) {
-			const response = await BaseService.getData(`movie/popular?page=${page}`, {}, track);
-			return response;
-		} else {
-			const response = await BaseService.getData(`movie/popular`, {}, track);
-			return response;
-		}
+	async mostPopularMovies(page = '1', track: boolean): Promise<any> {
+		const base_query = `3/movie/popular?language=en-US&page=${page}`;
+		const response = await BaseService.getData(base_query, {}, track);
+		return response;
 	}
 };

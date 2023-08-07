@@ -1,6 +1,6 @@
 import { useRef, memo } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { setQuery } from '../../redux/slice/movieSlice';
+import { resetMovieState, setQuery } from '../../redux/slice/movieSlice';
 
 const SearchBar = memo(() => {
 	const input_search = useRef<HTMLInputElement>(null);
@@ -9,6 +9,7 @@ const SearchBar = memo(() => {
 
 	const formSubmited = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		dispatch(resetMovieState());
 		if (!input_search.current?.value) return;
 		dispatch(setQuery(input_search.current?.value));
 	};
@@ -45,7 +46,6 @@ const SearchBar = memo(() => {
 					ref={input_search}
 					className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					placeholder="Search movie..."
-					required
 				/>
 				<button
 					type="submit"
