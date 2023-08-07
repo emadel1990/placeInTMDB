@@ -3,11 +3,12 @@ import { SWRConfig } from 'swr';
 import { AppRoutesConstants } from '../config/routes';
 import PublicRouteContainer from './PublicRouteContainer';
 import { App } from '../App';
+import localStorageProvider from '../services/SWRLocalCache';
 
 export const AppRoutes = () => {
 	return (
 		<Router>
-			<SWRConfig>
+			<SWRConfig value={{ provider: localStorageProvider }}>
 				<Routes>
 					<Route
 						path="/*"
