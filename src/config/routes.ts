@@ -1,4 +1,5 @@
 export const AppRoutesConstants = {
 	HOME: '/',
-	MY_LIST: '/my-list'
+	MY_LIST: '/my-list',
+	NOT_FOUND: '/not-found'
 };

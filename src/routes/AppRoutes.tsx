@@ -4,6 +4,7 @@ import { AppRoutesConstants } from '../config/routes';
 import PublicRouteContainer from './PublicRouteContainer';
 import { App } from '../App';
 import localStorageProvider from '../services/SWRLocalCache';
+import { NotFound } from '../pages/NotFound';
 
 export const AppRoutes = () => {
 	return (
@@ -12,7 +13,7 @@ export const AppRoutes = () => {
 				<Routes>
 					<Route
 						path="/*"
-						element={<Navigate to={AppRoutesConstants.HOME} />}
+						element={<Navigate to={AppRoutesConstants.NOT_FOUND} />}
 					/>
 					<Route element={<PublicRouteContainer />}>
 						<Route
@@ -25,6 +26,10 @@ export const AppRoutes = () => {
 						index
 						element={<MyList />}
 					/> */}
+						<Route
+							path={AppRoutesConstants.NOT_FOUND}
+							element={<NotFound />}
+						/>
 					</Route>
 				</Routes>
 			</SWRConfig>

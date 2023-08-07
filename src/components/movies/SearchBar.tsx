@@ -1,14 +1,16 @@
 import { useRef, memo } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { setQuery } from '../../redux/slice/movieSlice';
 
-const SeachBar = memo(() => {
+const SearchBar = memo(() => {
 	const input_search = useRef<HTMLInputElement>(null);
 	const form_ref = useRef<HTMLFormElement>(null);
+	const dispatch = useAppDispatch();
 
 	const formSubmited = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log('formSubmited');
-		console.log(input_search.current?.value);
-		form_ref.current?.reset();
+		if (!input_search.current?.value) return;
+		dispatch(setQuery(input_search.current?.value));
 	};
 
 	return (
@@ -55,6 +57,6 @@ const SeachBar = memo(() => {
 	);
 });
 
-SeachBar.displayName = 'SeachBar';
+SearchBar.displayName = 'SearchBar';
 
-export { SeachBar };
+export { SearchBar };

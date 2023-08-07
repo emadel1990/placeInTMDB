@@ -4,6 +4,8 @@ import type { RootState } from '../store/store';
 
 interface MovieDataState {
 	moviesData: MovieDBresponse;
+	query: string | undefined;
+	favorites?: Movie[];
 }
 
 const initialState: MovieDataState = {
@@ -12,15 +14,23 @@ const initialState: MovieDataState = {
 		results: [],
 		total_pages: 0,
 		total_results: 0
-	}
+	},
+	query: undefined,
+	favorites: []
 };
 
 export const movieSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
+		setQuery: (state, action: PayloadAction<string>) => {
+			state.query = action.payload;
+		},
 		setMovieList: (state, action: PayloadAction<MovieDBresponse>) => {
 			state.moviesData = action.payload;
+		},
+		addMovies: (state, action: PayloadAction<Movie[]>) => {
+			state.moviesData.results.push(...action.payload);
 		},
 		addMovie: (state, action: PayloadAction<Movie>) => {
 			state.moviesData.results.push(action.payload);
@@ -30,11 +40,22 @@ export const movieSlice = createSlice({
 		},
 		resetMovieState: (state) => {
 			state.moviesData = initialState.moviesData;
+			state.query = initialState.query;
+			state.favorites = initialState.favorites;
+		},
+		addToFavorites: (state, action: PayloadAction<Movie>) => {
+			state.favorites?.push(action.payload);
+		},
+		removeFromFavorites: (state, action: PayloadAction<number>) => {
+			state.favorites = state.favorites?.filter((movie) => movie.id !== action.payload);
+		},
+		resetFavorites: (state) => {
+			state.favorites = initialState.favorites;
 		}
 	}
 });
 
-export const { setMovieList, addMovie, removeMovie, resetMovieState } = movieSlice.actions;
+export const { setQuery, setMovieList, addMovies, addMovie, removeMovie, resetMovieState } = movieSlice.actions;
 
 export const getMovieData = (state: RootState) => state.movie;
 

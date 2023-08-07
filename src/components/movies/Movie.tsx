@@ -29,7 +29,7 @@ export const Movie = ({ id, title, imagePath }: MovieProps) => {
 				/>
 			</div>
 			{isLoading && <div className="h-60 w-44 bg-gray-300 animate-pulse absolute rounded-lg shadow-xl b cursor-pointer"></div>}
-			{!isLoading && <p>{title}</p>}
+			{!isLoading && <p className="font-mono py-1.5">{title}</p>}
 		</div>
 	);
 };
