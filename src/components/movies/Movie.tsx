@@ -1,12 +1,19 @@
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import { AppRoutesConstants } from '../../config/routes';
+import { useAppDispatch } from '../../hooks';
+import { setMovieSelected } from '../../redux/slice/movieSlice';
+import { Movie as MovieInterface } from '../../interfaces/movieDBResponse.interface';
 export interface MovieProps {
 	id: string;
 	title: string;
 	imagePath: string | undefined;
+	movie: MovieInterface;
 }
 
-export const Movie = ({ id, title, imagePath }: MovieProps) => {
+export const Movie = ({ id, title, imagePath, movie }: MovieProps) => {
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(false);
 
@@ -14,10 +21,17 @@ export const Movie = ({ id, title, imagePath }: MovieProps) => {
 		setIsLoading(false);
 	};
 
+	const handleClickMovie = () => {
+		dispatch(setMovieSelected(movie));
+		navigate(`${AppRoutesConstants.MOVIE}`);
+	};
+
 	if (error) return null;
 
 	return (
-		<div className="h-80 w-48 relative ">
+		<div
+			className="h-80 w-48 relative"
+			onClick={handleClickMovie}>
 			<div key={id}>
 				<img
 					src={imagePath ? `https://image.tmdb.org/t/p/w500${imagePath}` : ''}

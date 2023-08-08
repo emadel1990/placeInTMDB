@@ -22,4 +22,13 @@ export interface Movie {
 	video: boolean;
 	vote_average: number;
 	vote_count: number;
+	comments?: Comment[];
+}
+
+export interface Comment {
+	movieId: number;
+	comment: string;
+	name: string;
+	email: string;
+	rating: number;
 }

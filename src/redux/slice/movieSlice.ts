@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Movie, MovieDBresponse } from '../../interfaces/movieDBResponse.interface';
+import { Comment, Movie, MovieDBresponse } from '../../interfaces/movieDBResponse.interface';
 import type { RootState } from '../store/store';
 
 interface MovieDataState {
 	moviesData: MovieDBresponse;
 	query: string | undefined;
 	favorites?: Movie[];
+	movieSelected?: Movie | undefined;
 }
 
 const initialState: MovieDataState = {
@@ -16,7 +17,8 @@ const initialState: MovieDataState = {
 		total_results: 0
 	},
 	query: undefined,
-	favorites: []
+	favorites: [],
+	movieSelected: undefined
 };
 
 export const movieSlice = createSlice({
@@ -35,6 +37,15 @@ export const movieSlice = createSlice({
 		addMovie: (state, action: PayloadAction<Movie>) => {
 			state.moviesData.results.push(action.payload);
 		},
+		updateMovie: (state, action: PayloadAction<Movie>) => {
+			state.moviesData.results = state.moviesData.results.map((movie) => {
+				if (movie.id === action.payload.id) {
+					return action.payload;
+				} else {
+					return movie;
+				}
+			});
+		},
 		removeMovie: (state, action: PayloadAction<number>) => {
 			state.moviesData.results = state.moviesData.results.filter((movie) => movie.id !== action.payload);
 		},
@@ -51,11 +62,24 @@ export const movieSlice = createSlice({
 		},
 		resetFavorites: (state) => {
 			state.favorites = initialState.favorites;
+		},
+		setMovieSelected: (state, action: PayloadAction<Movie>) => {
+			state.movieSelected = action.payload;
+		},
+		addComment: (state, action: PayloadAction<Comment>) => {
+			const movie = state.moviesData.results.find((movie) => movie.id === action.payload.movieId);
+			if (movie) {
+				movie.comments = movie.comments ? [...movie.comments, action.payload] : [action.payload];
+			}
+			if (state.movieSelected?.id === action.payload.movieId) {
+				state.movieSelected.comments = state.movieSelected.comments ? [...state.movieSelected.comments, action.payload] : [action.payload];
+			}
 		}
 	}
 });
 
-export const { setQuery, setMovieList, addMovies, addMovie, removeMovie, resetMovieState } = movieSlice.actions;
+export const { setQuery, setMovieList, addMovies, addMovie, updateMovie, removeMovie, resetMovieState, setMovieSelected, addComment } =
+	movieSlice.actions;
 
 export const getMovieData = (state: RootState) => state.movie;
 

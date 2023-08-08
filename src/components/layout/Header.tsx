@@ -10,7 +10,7 @@ export const Header = () => {
 	};
 
 	return (
-		<nav className="bg-gray-800 p-4">
+		<nav className="bg-gray-800 p-4 sticky top-0">
 			<div className="container mx-auto flex justify-between items-center lg:px-40">
 				<div className="flex items-center">
 					<Link to={AppRoutesConstants.HOME}>
@@ -61,7 +61,7 @@ export const Header = () => {
 				</div>
 			</div>
 			{isOpen && (
-				<div className="md:hidden">
+				<div className="md:hidden absolute">
 					<div className="flex flex-col mt-2">
 						<Link
 							to="/"

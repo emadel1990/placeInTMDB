@@ -7,6 +7,7 @@ import localStorageProvider from '../services/SWRLocalCache';
 import { NotFound } from '../pages/NotFound';
 import { LayoutContainer } from '../components/layout/LayoutContainer';
 import { MyList } from '../pages/MyList';
+import { MoviePage } from '../pages/MoviePage';
 
 export const AppRoutes = () => {
 	return (
@@ -32,6 +33,10 @@ export const AppRoutes = () => {
 							<Route
 								path={AppRoutesConstants.NOT_FOUND}
 								element={<NotFound />}
+							/>
+							<Route
+								path={AppRoutesConstants.MOVIE}
+								element={<MoviePage />}
 							/>
 						</Route>
 					</Route>

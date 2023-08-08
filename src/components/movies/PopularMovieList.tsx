@@ -68,6 +68,7 @@ export const PopularMovieList = () => {
 								id={String(movie.id)}
 								imagePath={movie.poster_path!}
 								title={movie.title}
+								movie={movie}
 							/>
 						);
 					})}

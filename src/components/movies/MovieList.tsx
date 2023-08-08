@@ -7,7 +7,6 @@ import { Movie } from './Movie';
 import { Movie as MovieInterface } from '../../interfaces/movieDBResponse.interface';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { NoMovieFound } from './NotMovieFound';
-import { SkeletonListMovie } from './SkeletonListMovie';
 
 export const MovieList = () => {
 	const dispatch = useAppDispatch();
@@ -16,7 +15,6 @@ export const MovieList = () => {
 	const [hasMore, setHasMore] = useState(false);
 	const {
 		data: allMovies,
-		isLoading,
 		mutate: reloadMovies,
 		error
 	} = useFetch(
@@ -55,7 +53,6 @@ export const MovieList = () => {
 	return (
 		<div className="flex flex-wrap flex-row m-10  max-w-6xl gap-x-10 justify-center ">
 			{error && <h1 className="text-3xl font-bold text-white">Error while fetching...</h1>}
-			{isLoading && <SkeletonListMovie />}
 			{movieState.query && movieState.query?.length > 0 && movieState.moviesData.results.length > 0 && (
 				<InfiniteScroll
 					className="flex flex-wrap flex-row mx-10  w-full gap-x-10 justify-cente"
@@ -71,6 +68,7 @@ export const MovieList = () => {
 								id={String(movie.id)}
 								imagePath={movie.poster_path!}
 								title={movie.title}
+								movie={movie}
 							/>
 						);
 					})}

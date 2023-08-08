@@ -40,5 +40,15 @@ export const tmdbService = {
 		const base_query = `3/movie/popular?language=en-US&page=${page}`;
 		const response = await BaseService.getData(base_query, {}, track);
 		return response;
+	},
+	async getGenres(): Promise<any> {
+		const base_query = `https://api.themoviedb.org/3/genre/movie/list`;
+		const config: AxiosRequestConfig = {
+			headers: {
+				['Authorization']: 'Bearer ' + import.meta.env.VITE_MYKEY
+			}
+		};
+		const response = await axios.get(base_query, config);
+		return response;
 	}
 };

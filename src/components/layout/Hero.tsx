@@ -15,13 +15,13 @@ const Hero = memo(() => {
 
 	return (
 		<div className="flex flex-col justify-start items-center  min-h-48 mt-10 text-center mb-4">
-			<h1 className="text-3xl text-gray-900 dark:text-white font-sans">Welcome to PlaceIn</h1>
+			<h1 className="text-3xl text-white dark:text-white font-sans">Welcome to PlaceIn</h1>
 			<Lottie
 				animationData={animation_movie}
 				loop={refresh}
 				style={{ width: 400, height: 100 }}
 			/>
-			<h1 className="text-2xl text-gray-900 dark:text-white">from TMDB api</h1>
+			<h1 className="text-2xl text-white dark:text-white">from TMDB api</h1>
 		</div>
 	);
 });
