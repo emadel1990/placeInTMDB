@@ -1,4 +1,3 @@
-import './app.css';
 import { MoviesHomePage } from './pages/MoviesHomePage';
 
 const App = () => {
