@@ -35,7 +35,6 @@ export const MovieScore = ({ score }: MovieScoreProps) => {
 				auxScore = auxScore / 10;
 			}
 			setLocalRating(auxScore);
-			console.log('auxScore', auxScore);
 		}
 	}, [score]);
 

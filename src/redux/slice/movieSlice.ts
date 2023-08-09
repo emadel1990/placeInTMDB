@@ -55,7 +55,9 @@ export const movieSlice = createSlice({
 			state.myList = initialState.myList;
 		},
 		addToMyList: (state, action: PayloadAction<Movie>) => {
-			state.myList?.push(action.payload);
+			if (!state.myList?.find((movie) => movie.id === action.payload.id)) {
+				state.myList = state.myList ? [action.payload, ...state.myList] : [action.payload];
+			}
 		},
 		removeFromMyList: (state, action: PayloadAction<number>) => {
 			state.myList = state.myList?.filter((movie) => movie.id !== action.payload);

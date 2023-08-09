@@ -1,13 +1,20 @@
+import { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { lazy } from '@loadable/component';
 import { SWRConfig } from 'swr';
 import { AppRoutesConstants } from '../config/routes';
 import PublicRouteContainer from './PublicRouteContainer';
-import { App } from '../App';
 import localStorageProvider from '../services/SWRLocalCache';
-import { NotFound } from '../pages/NotFound';
-import { LayoutContainer } from '../components/layout/LayoutContainer';
-import { MyList } from '../pages/MyList';
-import { MoviePage } from '../pages/MoviePage';
+import LayoutContainer from '../components/layout/LayoutContainer';
+import { Spinner } from '../components/generics/Spinner';
+
+const LoadableApp = lazy(() => import('../App'));
+
+const LoadableMoviePage = lazy(() => import('../pages/MoviePage'));
+
+const LoadableNotFound = lazy(() => import('../pages/NotFound'));
+
+const LoadableMyList = lazy(() => import('../pages/MyList'));
 
 export const AppRoutes = () => {
 	return (
@@ -23,20 +30,36 @@ export const AppRoutes = () => {
 							<Route
 								path={AppRoutesConstants.HOME}
 								index
-								element={<App />}
+								element={
+									<Suspense fallback={<Spinner />}>
+										<LoadableApp />
+									</Suspense>
+								}
 							/>
 							<Route
 								path={AppRoutesConstants.MY_LIST}
 								index
-								element={<MyList />}
+								element={
+									<Suspense fallback={<Spinner />}>
+										<LoadableMyList />
+									</Suspense>
+								}
 							/>
 							<Route
 								path={AppRoutesConstants.NOT_FOUND}
-								element={<NotFound />}
+								element={
+									<Suspense fallback={<Spinner />}>
+										<LoadableNotFound />
+									</Suspense>
+								}
 							/>
 							<Route
 								path={AppRoutesConstants.MOVIE}
-								element={<MoviePage />}
+								element={
+									<Suspense fallback={<Spinner />}>
+										<LoadableMoviePage />
+									</Suspense>
+								}
 							/>
 						</Route>
 					</Route>

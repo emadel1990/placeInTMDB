@@ -1,6 +1,8 @@
 import './app.css';
-import { MoviesHomePage } from './pages/MoviesPage';
+import { MoviesHomePage } from './pages/MoviesHomePage';
 
-export const App = () => {
+const App = () => {
 	return <MoviesHomePage />;
 };
+
+export default App;

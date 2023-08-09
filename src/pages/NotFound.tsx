@@ -3,7 +3,7 @@ import animation_404 from '../assets/animation_404.json';
 import { useNavigate } from 'react-router-dom';
 import { AppRoutesConstants } from '../config/routes';
 
-export const NotFound = () => {
+const NotFound = () => {
 	const navigate = useNavigate();
 	return (
 		<div className="bg-gradient-to-t from-gray-500 to-gray-700 h-screen flex flex-col items-center justify-start">
@@ -21,3 +21,5 @@ export const NotFound = () => {
 		</div>
 	);
 };
+
+export default NotFound;

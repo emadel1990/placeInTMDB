@@ -55,7 +55,7 @@ export const MovieList = () => {
 			{error && <h1 className="text-3xl font-bold text-white">Error while fetching...</h1>}
 			{movieState.query && movieState.query?.length > 0 && movieState.moviesData.results.length > 0 && (
 				<InfiniteScroll
-					className="flex flex-wrap flex-row mx-10  w-full gap-x-10 justify-cente"
+					className="flex flex-wrap flex-row mx-10 w-full gap-x-10 justify-center"
 					dataLength={movieState?.moviesData?.results?.length}
 					next={fetchMoreData}
 					hasMore={hasMore}

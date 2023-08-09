@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate } from 'react-router-dom';
-import { getMovieData, addComment, updateMovie } from '../redux/slice/movieSlice';
+import { getMovieData, addComment, updateMovie, addToMyList } from '../redux/slice/movieSlice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { Comment, Movie } from '../interfaces/movieDBResponse.interface';
 import { useFetch } from '../hooks/useFetch';
@@ -15,7 +15,7 @@ import { CommentGenerator } from '../utils/FakeComments';
 import { LocalCommentAdd } from '../utils/localCommentsHandler';
 import { MovieScore } from '../components/movies/MovieScore';
 
-export const MoviePage = () => {
+const MoviePage = () => {
 	const dispatch = useAppDispatch();
 	const form_ref = useRef<HTMLFormElement>(null);
 	const navigate = useNavigate();
@@ -68,6 +68,7 @@ export const MoviePage = () => {
 		};
 		dispatch(addComment(newComment));
 		LocalCommentAdd(newComment);
+		dispatch(addToMyList(movie));
 		setRating(3);
 		form_ref.current?.reset();
 	};
@@ -142,3 +143,5 @@ export const MoviePage = () => {
 		</div>
 	);
 };
+
+export default MoviePage;
