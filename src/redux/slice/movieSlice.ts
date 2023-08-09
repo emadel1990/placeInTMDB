@@ -5,7 +5,7 @@ import type { RootState } from '../store/store';
 interface MovieDataState {
 	moviesData: MovieDBresponse;
 	query: string | undefined;
-	favorites?: Movie[];
+	myList?: Movie[];
 	movieSelected?: Movie | undefined;
 }
 
@@ -17,7 +17,7 @@ const initialState: MovieDataState = {
 		total_results: 0
 	},
 	query: undefined,
-	favorites: [],
+	myList: [],
 	movieSelected: undefined
 };
 
@@ -38,13 +38,13 @@ export const movieSlice = createSlice({
 			state.moviesData.results.push(action.payload);
 		},
 		updateMovie: (state, action: PayloadAction<Movie>) => {
-			state.moviesData.results = state.moviesData.results.map((movie) => {
-				if (movie.id === action.payload.id) {
-					return action.payload;
-				} else {
-					return movie;
-				}
-			});
+			const movie = state.moviesData.results.filter((movie) => movie.id === action.payload.id);
+			if (movie) {
+				movie[0] = action.payload;
+			}
+			if (movie[0].id === state.movieSelected?.id) {
+				state.movieSelected = action.payload;
+			}
 		},
 		removeMovie: (state, action: PayloadAction<number>) => {
 			state.moviesData.results = state.moviesData.results.filter((movie) => movie.id !== action.payload);
@@ -52,16 +52,16 @@ export const movieSlice = createSlice({
 		resetMovieState: (state) => {
 			state.moviesData = initialState.moviesData;
 			state.query = initialState.query;
-			state.favorites = initialState.favorites;
+			state.myList = initialState.myList;
 		},
-		addToFavorites: (state, action: PayloadAction<Movie>) => {
-			state.favorites?.push(action.payload);
+		addToMyList: (state, action: PayloadAction<Movie>) => {
+			state.myList?.push(action.payload);
 		},
-		removeFromFavorites: (state, action: PayloadAction<number>) => {
-			state.favorites = state.favorites?.filter((movie) => movie.id !== action.payload);
+		removeFromMyList: (state, action: PayloadAction<number>) => {
+			state.myList = state.myList?.filter((movie) => movie.id !== action.payload);
 		},
-		resetFavorites: (state) => {
-			state.favorites = initialState.favorites;
+		resetMyList: (state) => {
+			state.myList = initialState.myList;
 		},
 		setMovieSelected: (state, action: PayloadAction<Movie>) => {
 			state.movieSelected = action.payload;
@@ -69,17 +69,40 @@ export const movieSlice = createSlice({
 		addComment: (state, action: PayloadAction<Comment>) => {
 			const movie = state.moviesData.results.find((movie) => movie.id === action.payload.movieId);
 			if (movie) {
-				movie.comments = movie.comments ? [...movie.comments, action.payload] : [action.payload];
+				movie.comments = movie.comments ? [action.payload, ...movie.comments] : [action.payload];
 			}
 			if (state.movieSelected?.id === action.payload.movieId) {
-				state.movieSelected.comments = state.movieSelected.comments ? [...state.movieSelected.comments, action.payload] : [action.payload];
+				state.movieSelected.comments = state.movieSelected.comments ? [action.payload, ...state.movieSelected.comments] : [action.payload];
+			}
+		},
+		addComments: (state, action: PayloadAction<Comment[]>) => {
+			const movie = state.moviesData.results.find((movie) => movie.id === action.payload[0].movieId);
+			if (movie) {
+				movie.comments = movie.comments ? [...action.payload, ...movie.comments] : [...action.payload];
+			}
+			if (state.movieSelected?.id === action.payload[0].movieId) {
+				state.movieSelected.comments = state.movieSelected.comments
+					? [...action.payload, ...state.movieSelected.comments]
+					: [...action.payload];
 			}
 		}
 	}
 });
 
-export const { setQuery, setMovieList, addMovies, addMovie, updateMovie, removeMovie, resetMovieState, setMovieSelected, addComment } =
-	movieSlice.actions;
+export const {
+	setQuery,
+	setMovieList,
+	addMovies,
+	addMovie,
+	updateMovie,
+	removeMovie,
+	resetMovieState,
+	setMovieSelected,
+	addComment,
+	addToMyList,
+	removeFromMyList,
+	resetMyList
+} = movieSlice.actions;
 
 export const getMovieData = (state: RootState) => state.movie;
 

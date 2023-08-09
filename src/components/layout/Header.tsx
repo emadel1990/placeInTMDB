@@ -10,7 +10,7 @@ export const Header = () => {
 	};
 
 	return (
-		<nav className="bg-gray-800 p-4 sticky top-0">
+		<nav className="bg-gray-800 p-4 sticky top-0 z-10">
 			<div className="container mx-auto flex justify-between items-center lg:px-40">
 				<div className="flex items-center">
 					<Link to={AppRoutesConstants.HOME}>
@@ -20,17 +20,17 @@ export const Header = () => {
 							alt="Logo"
 						/>
 					</Link>
-					<label className="text-white font-sans font-bold">MovieDB Challenge</label>
+					<label className="text-white font-sans font-bold text-lg">MovieDB Challenge</label>
 				</div>
 				<div className="hidden md:flex items-center">
 					<Link
 						to={AppRoutesConstants.HOME}
-						className="text-white mx-4">
+						className="text-white mx-4 font-bold text-lg font-body">
 						Home
 					</Link>
 					<Link
 						to={AppRoutesConstants.MY_LIST}
-						className="text-white mx-4">
+						className="text-white mx-4 font-bold text-lg font-body">
 						My List
 					</Link>
 				</div>

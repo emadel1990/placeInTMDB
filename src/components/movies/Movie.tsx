@@ -30,7 +30,7 @@ export const Movie = ({ id, title, imagePath, movie }: MovieProps) => {
 
 	return (
 		<div
-			className="h-80 w-48 relative"
+			className="h-80 w-48 relative mb-6"
 			onClick={handleClickMovie}>
 			<div key={id}>
 				<img
@@ -44,6 +44,7 @@ export const Movie = ({ id, title, imagePath, movie }: MovieProps) => {
 			</div>
 			{isLoading && <div className="h-60 w-44 bg-gray-300 animate-pulse absolute rounded-lg shadow-xl b cursor-pointer"></div>}
 			{!isLoading && <p className="font-mono py-1.5">{title}</p>}
+			{!isLoading && <p className="font-mono text-sm">{String(movie.release_date)}</p>}
 		</div>
 	);
 };

@@ -6,7 +6,7 @@ import { useAppSelector } from '../hooks';
 import { getMovieData } from '../redux/slice/movieSlice';
 import { PopularMovieList } from '../components/movies/PopularMovieList';
 
-export const MoviesPage = () => {
+export const MoviesHomePage = () => {
 	const movieData = useAppSelector(getMovieData);
 	const [showPopular, setShowPopular] = useState(true);
 

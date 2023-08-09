@@ -26,9 +26,11 @@ export interface Movie {
 }
 
 export interface Comment {
+	commentId: number;
 	movieId: number;
 	comment: string;
 	name: string;
 	email: string;
 	rating: number;
+	date: string;
 }

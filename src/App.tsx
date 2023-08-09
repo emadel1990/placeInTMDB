@@ -1,6 +1,6 @@
 import './app.css';
-import { MoviesPage } from './pages/MoviesPage';
+import { MoviesHomePage } from './pages/MoviesPage';
 
 export const App = () => {
-	return <MoviesPage />;
+	return <MoviesHomePage />;
 };
