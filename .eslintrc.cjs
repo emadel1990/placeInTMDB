@@ -30,8 +30,8 @@ module.exports = {
 				skipComments: true
 			}
 		],
-		'no-unused-vars': 'error',
-		'@typescript-eslint/no-unused-vars': ['error'],
+		'no-unused-vars': 'warn',
+		'@typescript-eslint/no-unused-vars': ['warn'],
 		'@typescript-eslint/type-annotation-spacing': [
 			'warn',
 			{
